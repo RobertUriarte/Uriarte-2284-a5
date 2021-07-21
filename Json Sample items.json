@@ -1,0 +1,7 @@
+{
+    "items" : [
+        {"value": "$50.00", "serial": "1234567890", "name": "Tv"},
+        {"value": "$20.00", "serial": "0123456789", "name": "Car"},
+        {"value": "$10.00", "serial": "0987654321", "name": "Watch"}
+    ]
+}
