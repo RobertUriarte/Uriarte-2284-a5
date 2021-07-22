@@ -1,16 +1,22 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Robert Uriarte
+ */
+
 package ucf.assignments;
+
+//Set up imports
 import javafx.scene.control.TableView;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ExcelExport<Todo_Item> {
+public class ExcelExport<Inventory_Item> {
     //Initialize Export Function
-    public void export(TableView<Todo_Item> tableView){
+    public void export(TableView<Inventory_Item> tableView){
         //Initialize workbook
         //Initialize sheet
         //Initialize rows
@@ -58,5 +64,4 @@ public class ExcelExport<Todo_Item> {
             e.printStackTrace();
         }
     }
-
 }
