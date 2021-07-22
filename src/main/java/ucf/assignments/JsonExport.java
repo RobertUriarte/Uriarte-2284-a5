@@ -1,3 +1,7 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Robert Uriarte
+ */
 package ucf.assignments;
 
 import javafx.collections.ObservableList;
@@ -10,14 +14,20 @@ import java.io.FileWriter;
 
 public class JsonExport extends Component {
     public void export_json(ObservableList<Inventory_Item> item_list){
+        //Initialize file chooser
+        //Set up save dialog
+        //Set file name to .json to save html files
+        //Set up filter to show json files
+
         JFileChooser fileChooser= new JFileChooser();
-        // Some init code, if you need one, like setting title
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooser.setSelectedFile(new File(".json"));
         fileChooser.setFileFilter(new FileNameExtensionFilter("json file","json"));
+
+        //If file is approved, create an html file
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            try{
+            try{ //Write base for json file, then add data to json
                 FileWriter writer = new FileWriter(fileToSave);
                 writer.write("""
                         {
