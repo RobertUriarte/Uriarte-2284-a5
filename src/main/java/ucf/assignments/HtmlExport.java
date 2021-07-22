@@ -1,7 +1,11 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Robert Uriarte
+ */
 package ucf.assignments;
 
+//Set up imports
 import javafx.collections.ObservableList;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -11,17 +15,20 @@ import java.io.FileWriter;
 
 public class HtmlExport extends Component {
     public void export_html(ObservableList<Inventory_Item> item_list) {
+        //Initialize file chooser
+        //Set up save dialog
+        //Set file name to .html to save html files
+        //Set up filter to show html files
+
         JFileChooser fileChooser = new JFileChooser();
-        // Some init code, if you need one, like setting title
-        //set it to be a save dialog
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-        //set a default filename (this is where you default extension first comes in)
         fileChooser.setSelectedFile(new File(".html"));
-        //Set an extension filter, so the user sees other XML files
         fileChooser.setFileFilter(new FileNameExtensionFilter("html file","html"));
+
+        //If file is approved, create an html file
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            try {
+            try { //String build html file and add values from tableview
                 StringBuilder sb = new StringBuilder();
                 sb.append("<html>\n");
                 sb.append("<head>\n");
@@ -39,6 +46,13 @@ public class HtmlExport extends Component {
                 sb.append("</b>");
                 sb.append("</body>\n");
                 sb.append("</html>");
+
+                //Initialize file writer
+                //Write data to file
+                //Close file
+                //Tell user file is saved
+                //Set up error case
+
                 FileWriter writer = new FileWriter(fileToSave);
                 BufferedWriter out = new BufferedWriter(writer);
                 out.write(sb.toString());
@@ -49,7 +63,6 @@ public class HtmlExport extends Component {
                 ErrorMessages.displayFileError();
                 JOptionPane.showMessageDialog(null, e);
             }
-
         }
     }
 }
