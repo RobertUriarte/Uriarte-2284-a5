@@ -16,7 +16,7 @@ public class JsonExport extends Component {
     public void export_json(ObservableList<Inventory_Item> item_list){
         //Initialize file chooser
         //Set up save dialog
-        //Set file name to .json to save html files
+        //Set file name to .json to save json files
         //Set up filter to show json files
 
         JFileChooser fileChooser= new JFileChooser();
