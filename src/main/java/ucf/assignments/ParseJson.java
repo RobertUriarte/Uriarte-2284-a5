@@ -1,6 +1,6 @@
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
- *  Copyright 2021 first_name last_name
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Robert Uriarte
  */
 package ucf.assignments;
 
@@ -40,7 +40,6 @@ public class ParseJson {
                 String value = productJsonObject.get("value").getAsString();
                 String serial = productJsonObject.get("serial").getAsString();
                 String name = productJsonObject.get("name").getAsString();
-
 
                 //Create item
                 Inventory_Item item = new Inventory_Item(value,serial,name);
