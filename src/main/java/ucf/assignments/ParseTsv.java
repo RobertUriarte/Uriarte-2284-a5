@@ -4,6 +4,7 @@
  */
 package ucf.assignments;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
@@ -14,11 +15,15 @@ public class ParseTsv {
         //Initialize file chooser
         //Set title
         //Get file from user
+        //Read file from user
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open file");
         File file = fileChooser.showOpenDialog(tableView.getScene().getWindow());
+        read_tsv_file(tableView.getItems(),file);
+    }
 
+    public void read_tsv_file(ObservableList<Inventory_Item> item_list, File file){
         //Try to read file and separate strings by tab spaces
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -29,7 +34,7 @@ public class ParseTsv {
                 //Create item
                 Inventory_Item item = new Inventory_Item(split[0],split[1],split[2]);
                 //Add item
-                tableView.getItems().add(item);
+                item_list.add(item);
             }
         } catch (IOException e) {
             ErrorMessages.displayFileNotFoundError();
