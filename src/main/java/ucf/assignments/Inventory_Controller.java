@@ -75,7 +75,7 @@ public class Inventory_Controller implements Initializable  {
         tableView.setItems(sortedList);
     }
 
-    public  SortedList<Inventory_Item> filterData(FilteredList<Inventory_Item> filteredList, String newValue) {
+    public SortedList<Inventory_Item> filterData(FilteredList<Inventory_Item> filteredList, String newValue) {
         //Set filtered list predicate
         //Check if user_input is contained in our list
         //Return sorted list of filtered list
@@ -119,13 +119,13 @@ public class Inventory_Controller implements Initializable  {
         tableView.setItems(item_list);
     }
 
-    public void  addItemFunction(){
+    public void addItemFunction(){
         //Get serial number from user input and check if it is a duplicate value
         //Get serial number from user input and check if it is a valid serial number
         //Get the money value from user input and check if it is a valid money value
         //Get the name value from user input and check if it is a valid name
 
-        boolean duplicate = is_duplicate(serialTextField.getText().toUpperCase());
+        boolean duplicate = is_duplicate(serialTextField.getText().toUpperCase(),item_list);
         boolean correct_serial = valid_serial(serialTextField.getText().toUpperCase());
         String money_value = format_money(valueTextField.getText());
         String name_value = valid_name(nameTextField.getText());
@@ -138,16 +138,17 @@ public class Inventory_Controller implements Initializable  {
         }
     }
 
-    public boolean is_duplicate(String val){
+    public boolean is_duplicate(String val, ObservableList<Inventory_Item> item_list2){
         //Loop for all items in the list
         //Check if the serial number already exist
         //If serial number exist, display error message
         //Return true if it exist
         //Return false if it does not already exist
 
-        for (Inventory_Item inventory_item : item_list) {
+        for (Inventory_Item inventory_item : item_list2) {
             if (inventory_item.getSerial().equals(val)) {
-                ErrorMessages.displayDuplicateError();
+                if(item_list2 == item_list)
+                    ErrorMessages.displayDuplicateError();
                 return true;
             }
         }
@@ -280,7 +281,7 @@ public class Inventory_Controller implements Initializable  {
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String val = newCell.getNewValue().toString().toUpperCase();
-        if(!is_duplicate(val) && valid_serial(val))
+        if(!is_duplicate(val,item_list) && valid_serial(val))
             item_selected.setSerial(newCell.getNewValue().toString().toUpperCase());
     }
 
