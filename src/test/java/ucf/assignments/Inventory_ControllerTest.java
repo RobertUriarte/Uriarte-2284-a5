@@ -116,6 +116,12 @@ class Inventory_ControllerTest {
 
     @Test
     void clearAllButtonClickedTest() {
+        ObservableList<Inventory_Item> allItems = item_listTest;
+
+        inventory_controller.remove_all_items(item_listTest,allItems);
+        item_listTest.add(new Inventory_Item("$50.00","EFGHIJKL10","Laptop"));
+
+        assertEquals(item_listTest.size(), 1);
     }
 
     @Test

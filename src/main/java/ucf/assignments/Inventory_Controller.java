@@ -244,6 +244,10 @@ public class Inventory_Controller implements Initializable  {
         tableView.setItems(item_list);
         allItems = tableView.getItems();
         all = tableView.getItems();
+        remove_all_items(allItems,all);
+    }
+
+    public void remove_all_items(ObservableList<Inventory_Item> allItems, ObservableList<Inventory_Item> all){
         allItems.removeAll(all);
     }
 
