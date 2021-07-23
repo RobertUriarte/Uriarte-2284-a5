@@ -16,13 +16,20 @@ import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
 public class ParseJson {
-    public static void parse(TableView<Inventory_Item> tableView) {
+    public void parse(TableView<Inventory_Item> tableView) {
         //Initialize items
+        //Initialize file
+        //Read file
+
         ObservableList<Inventory_Item> items = FXCollections.observableArrayList();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open file");
+        File file = fileChooser.showOpenDialog(tableView.getScene().getWindow());
+        read_json(tableView.getItems(),file);
+    }
+
+    public void read_json(ObservableList<Inventory_Item> item_list, File file){
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open file");
-            File file = fileChooser.showOpenDialog(tableView.getScene().getWindow());
             //Initialize File reader
             JsonElement fileElement = JsonParser.parseReader(new FileReader(file));
             //Get file as json object
@@ -44,7 +51,7 @@ public class ParseJson {
                 //Create item
                 Inventory_Item item = new Inventory_Item(value,serial,name);
                 //Add item
-                tableView.getItems().add(item);
+                item_list.add(item);
             }
         }
         //Error case

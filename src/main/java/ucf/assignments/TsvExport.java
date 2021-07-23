@@ -27,21 +27,25 @@ public class TsvExport extends Component {
         //If file is approved, create html file
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            try{ //Create html file with user data and separate by tab spaces
-                FileWriter writer = new FileWriter(fileToSave);
-                writer.write("Value\tSerial Number\tName\n");
-                for (Inventory_Item inventory_item : item_list) {
-                    writer.write(inventory_item.getValue() + "\t");
-                    writer.write(inventory_item.getSerial() + "\t");
-                    writer.write(inventory_item.getName() + "\n");
-                }
-                JOptionPane.showMessageDialog(null, "File Successfully Saved");
-                writer.close();
+            write_tsv(item_list,fileToSave);
+        }
+    }
+
+    public void write_tsv(ObservableList<Inventory_Item> item_list, File fileToSave){
+        try{ //Create html file with user data and separate by tab spaces
+            FileWriter writer = new FileWriter(fileToSave);
+            writer.write("Value\tSerial Number\tName\n");
+            for (Inventory_Item inventory_item : item_list) {
+                writer.write(inventory_item.getValue() + "\t");
+                writer.write(inventory_item.getSerial() + "\t");
+                writer.write(inventory_item.getName() + "\n");
             }
-            catch(Exception e){
-                ErrorMessages.displayFileError();
-                JOptionPane.showMessageDialog(null, e);
-            }
+            JOptionPane.showMessageDialog(null, "File Successfully Saved");
+            writer.close();
+        }
+        catch(Exception e){
+            ErrorMessages.displayFileError();
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 }

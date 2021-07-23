@@ -28,41 +28,45 @@ public class HtmlExport extends Component {
         //If file is approved, create an html file
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            try { //String build html file and add values from tableview
-                StringBuilder sb = new StringBuilder();
-                sb.append("<html>\n");
-                sb.append("<head>\n");
-                sb.append("<title>Inventory\n");
-                sb.append("</title>\n");
-                sb.append("</head>\n");
-                sb.append("<body> <b>\n");
-                sb.append("Value&emsp;Serial &emsp; Number &emsp; Name\n");
-                for (Inventory_Item inventory_item : item_list) {
-                    sb.append("<br>");
-                    sb.append(inventory_item.getValue() + "&emsp;");
-                    sb.append(inventory_item.getSerial() + "&emsp;");
-                    sb.append(inventory_item.getName()).append("\n");
-                }
-                sb.append("</b>");
-                sb.append("</body>\n");
-                sb.append("</html>");
+            write_html(item_list,fileToSave);
+        }
+    }
 
-                //Initialize file writer
-                //Write data to file
-                //Close file
-                //Tell user file is saved
-                //Set up error case
-
-                FileWriter writer = new FileWriter(fileToSave);
-                BufferedWriter out = new BufferedWriter(writer);
-                out.write(sb.toString());
-                out.close();
-                JOptionPane.showMessageDialog(null, "File Successfully Saved");
-                writer.close();
-            } catch (Exception e) {
-                ErrorMessages.displayFileError();
-                JOptionPane.showMessageDialog(null, e);
+    public void write_html(ObservableList<Inventory_Item> item_list, File fileToSave){
+        try { //String build html file and add values from tableview
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html>\n");
+            sb.append("<head>\n");
+            sb.append("<title>Inventory\n");
+            sb.append("</title>\n");
+            sb.append("</head>\n");
+            sb.append("<body> <b>\n");
+            sb.append("Value&emsp;Serial &emsp; Number &emsp; Name\n");
+            for (Inventory_Item inventory_item : item_list) {
+                sb.append("<br>");
+                sb.append(inventory_item.getValue()).append("&emsp;");
+                sb.append(inventory_item.getSerial()).append("&emsp;");
+                sb.append(inventory_item.getName()).append("\n");
             }
+            sb.append("</b>");
+            sb.append("</body>\n");
+            sb.append("</html>");
+
+            //Initialize file writer
+            //Write data to file
+            //Close file
+            //Tell user file is saved
+            //Set up error case
+
+            FileWriter writer = new FileWriter(fileToSave);
+            BufferedWriter out = new BufferedWriter(writer);
+            out.write(sb.toString());
+            out.close();
+            JOptionPane.showMessageDialog(null, "File Successfully Saved");
+            writer.close();
+        } catch (Exception e) {
+            ErrorMessages.displayFileError();
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 }

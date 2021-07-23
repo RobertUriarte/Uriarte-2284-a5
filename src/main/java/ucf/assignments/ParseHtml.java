@@ -4,6 +4,7 @@
  */
 package ucf.assignments;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
@@ -17,11 +18,15 @@ public class ParseHtml {
         //Initialize file chooser
         //Set title
         //Get file from user
+        //Read html file
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open file");
         File file = fileChooser.showOpenDialog(tableView.getScene().getWindow());
+        read_html(tableView.getItems(),file);
+    }
 
+    public void read_html(ObservableList<Inventory_Item> item_list, File file){
         //Try to read data from file
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -32,7 +37,7 @@ public class ParseHtml {
                     //Create item
                     Inventory_Item item = new Inventory_Item(split2[1],split[1],split[2]);
                     //Add item
-                    tableView.getItems().add(item);
+                    item_list.add(item);
                 }
             }
         } catch (IOException e) {

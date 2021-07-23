@@ -27,29 +27,33 @@ public class JsonExport extends Component {
         //If file is approved, create an html file
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            try{ //Write base for json file, then add data to json
-                FileWriter writer = new FileWriter(fileToSave);
-                writer.write("""
+            write_json(item_list,fileToSave);
+        }
+    }
+
+    public void write_json(ObservableList<Inventory_Item> item_list, File fileToSave){
+        try{ //Write base for json file, then add data to json
+            FileWriter writer = new FileWriter(fileToSave);
+            writer.write("""
                         {
                             "items" : [
                         """);
-                for (int i = 0; i < item_list.size(); i++) {
-                    writer.write("        {\"value\": \"" + item_list.get(i).getValue());
-                    writer.write("\", \"serial\": \"" + item_list.get(i).getSerial());
-                    if(i != item_list.size()-1)
-                        writer.write("\", \"name\": \"" + item_list.get(i).getName() + "\"},\n");
-                    else
-                        writer.write("\", \"name\": \"" + item_list.get(i).getName() + "\"}\n");
-                }
-                writer.write("    ]\n" +
-                        "}");
-                JOptionPane.showMessageDialog(null, "File Successfully Saved");
-                writer.close();
+            for (int i = 0; i < item_list.size(); i++) {
+                writer.write("        {\"value\": \"" + item_list.get(i).getValue());
+                writer.write("\", \"serial\": \"" + item_list.get(i).getSerial());
+                if(i != item_list.size()-1)
+                    writer.write("\", \"name\": \"" + item_list.get(i).getName() + "\"},\n");
+                else
+                    writer.write("\", \"name\": \"" + item_list.get(i).getName() + "\"}\n");
             }
-            catch(Exception e){
-                ErrorMessages.displayFileError();
-                JOptionPane.showMessageDialog(null, e);
-            }
+            writer.write("    ]\n" +
+                    "}");
+            JOptionPane.showMessageDialog(null, "File Successfully Saved");
+            writer.close();
+        }
+        catch(Exception e){
+            ErrorMessages.displayFileError();
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 }
