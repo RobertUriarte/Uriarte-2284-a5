@@ -14,41 +14,41 @@
    <children>
       <TableView fx:id="tableView" layoutX="-2.0" layoutY="104.0" prefHeight="296.0" prefWidth="608.0">
         <columns>
-          <TableColumn fx:id="value" onEditCommit="#ChangeValueCell" prefWidth="163.99994504451752" text="Value" />
-          <TableColumn fx:id="serial" onEditCommit="#ChangeSerialNumberCell" prefWidth="252.800048828125" text="Serial Number" />
-            <TableColumn fx:id="name" onEditCommit="#ChangeNameCell" prefWidth="189.60003662109375" text="Name" />
+          <TableColumn fx:id="value" onEditCommit="#changeValueCell" prefWidth="163.99994504451752" text="Value" />
+          <TableColumn fx:id="serial" onEditCommit="#changeSerialNumberCell" prefWidth="252.800048828125" text="Serial Number" />
+            <TableColumn fx:id="name" onEditCommit="#changeNameCell" prefWidth="189.60003662109375" text="Name" />
         </columns>
       </TableView>
       <ToolBar prefHeight="40.0" prefWidth="606.0">
         <items>
             <MenuButton fx:id="save" mnemonicParsing="false" text="Save as">
               <items>
-                <MenuItem fx:id="tsv" mnemonicParsing="false" onAction="#SaveAsTsvButtonClicked" text="Tsv" />
+                <MenuItem fx:id="tsv" mnemonicParsing="false" onAction="#saveAsTsvButtonClicked" text="Tsv" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem fx:id="html" mnemonicParsing="false" onAction="#SaveAsHtmlButtonClicked" text="Html" />
+                <MenuItem fx:id="html" mnemonicParsing="false" onAction="#saveAsHtmlButtonClicked" text="Html" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="json" mnemonicParsing="false" onAction="#SaveAsJsonButtonClicked" text="Json" />
+                  <MenuItem fx:id="json" mnemonicParsing="false" onAction="#saveAsJsonButtonClicked" text="Json" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#SaveExcelButtonClicked" text="Excel" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveExcelButtonClicked" text="Excel" />
               </items>
             </MenuButton>
             <MenuButton mnemonicParsing="false" text="Load">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#LoadTsvButtonClicked" text="Tsv" />
+                <MenuItem mnemonicParsing="false" onAction="#loadTsvButtonClicked" text="Tsv" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem mnemonicParsing="false" onAction="#LoadHtmlButtonClicked" text="Html" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#LoadJsonButtonClicked" text="Json" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadJsonButtonClicked" text="Json" />
               </items>
             </MenuButton>
-            <Button mnemonicParsing="false" onAction="#RemoveItemButtonClicked" text="Remove" />
-            <Button mnemonicParsing="false" onAction="#ClearAllButtonClicked" text="Clear All" />
-            <TextField fx:id="searchTextField" onAction="#SearchButtonClicked" prefHeight="26.0" prefWidth="314.0" promptText="Search" />
+            <Button mnemonicParsing="false" onAction="#removeItemButtonClicked" text="Remove" />
+            <Button mnemonicParsing="false" onAction="#clearAllButtonClicked" text="Clear All" />
+            <TextField fx:id="searchTextField" onAction="#searchButtonClicked" prefHeight="26.0" prefWidth="314.0" promptText="Search" />
         </items>
       </ToolBar>
       <TextField fx:id="valueTextField" layoutX="6.0" layoutY="54.0" prefHeight="26.0" prefWidth="166.0" promptText="Value" />
       <TextField fx:id="serialTextField" layoutX="181.0" layoutY="54.0" prefHeight="26.0" prefWidth="174.0" promptText="Serial Number" />
-      <Button layoutX="544.0" layoutY="54.0" mnemonicParsing="false" onAction="#AddItemButtonClicked" prefHeight="26.0" prefWidth="41.0" text="Add" />
+      <Button layoutX="544.0" layoutY="54.0" mnemonicParsing="false" onAction="#addItemButtonClicked" prefHeight="26.0" prefWidth="41.0" text="Add" />
       <TextField fx:id="nameTextField" layoutX="361.0" layoutY="54.0" prefHeight="26.0" prefWidth="173.0" promptText="Name" />
    </children>
 </AnchorPane>

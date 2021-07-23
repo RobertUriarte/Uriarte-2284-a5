@@ -1,5 +1,5 @@
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Robert Uriarte
  */
 package ucf.assignments;
@@ -43,7 +43,6 @@ public class Inventory_Controller implements Initializable  {
     //Initialize Observable inventory list
     public ObservableList<Inventory_Item> item_list = FXCollections.observableArrayList();
 
-    //Initialize file chooser
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Initialize cellValueFactory of cells of tableview
@@ -54,8 +53,6 @@ public class Inventory_Controller implements Initializable  {
         //Initialize allowing multiple selection mode
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        //Set our tableView to empty item list
-
         //Set tableView to be editable
         tableView.setEditable(true);
 
@@ -64,51 +61,90 @@ public class Inventory_Controller implements Initializable  {
         serial.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        //Set our tableView to empty item list
         tableView.setItems(item_list);
     }
 
     @FXML
-    public void SearchButtonClicked(ActionEvent actionEvent){
-        FilteredList<Inventory_Item> filteredList = new FilteredList<>(item_list,b->true);
-        searchTextField.textProperty().addListener((observable,oldValue,newValue) ->{
-            filteredList.setPredicate(inventory_item -> {
-                if(newValue == null || newValue.isEmpty()){
-                    return true;
-                }
+    public void searchButtonClicked(ActionEvent actionEvent){
+        //Create a sorted list based on user input
+        SortedList<Inventory_Item> sortedList = filterList(item_list,searchTextField);
 
-                if(inventory_item.getValue().contains(newValue))
-                    return true;
-                else if(inventory_item.getSerial().contains(newValue))
-                    return true;
-                else return inventory_item.getName().contains(newValue);
-            });
-        });
-
-        SortedList<Inventory_Item> sortedList = new SortedList<>(filteredList);
+        //Set the tableview to the sorted list
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-
         tableView.setItems(sortedList);
     }
 
+    public  SortedList<Inventory_Item> filterData(FilteredList<Inventory_Item> filteredList, String newValue) {
+        //Set filtered list predicate
+        //Check if user_input is contained in our list
+        //Return sorted list of filtered list
+        filteredList.setPredicate(inventory_item -> {
+            if(newValue == null || newValue.isEmpty()){
+                return true;
+            }
+
+            if(inventory_item.getValue().contains(newValue))
+                return true;
+            else if(inventory_item.getSerial().contains(newValue))
+                return true;
+            else return inventory_item.getName().contains(newValue);
+        });
+        return new SortedList<>(filteredList);
+    }
+
+    public SortedList<Inventory_Item> filterList(ObservableList<Inventory_Item> item_list,TextField searchTextField){
+        //Create a filtered list
+        //Add a listener to the search bar text field
+        //Set the predicates to search for values,serial numbers, and names in the observable list
+        //return our sorted list
+
+        FilteredList<Inventory_Item> filteredList = new FilteredList<>(item_list,b->true);
+
+        searchTextField.textProperty().addListener((observable,oldValue,newValue) -> {
+            SortedList<Inventory_Item> sortedList = filterData(filteredList, newValue);
+            sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+            tableView.setItems(sortedList);
+        });
+
+        return new SortedList<>(filteredList);
+    }
+
     @FXML
-    public void AddItemButtonClicked(ActionEvent actionEvent){
-        //Create new item with textField values from user input
-        //set tableView back to all items
-        //Add new item to all items
+    public void addItemButtonClicked(ActionEvent actionEvent){
+        //Call add item function
+        //Set the tableview to our item list
+
+        addItemFunction();
+        tableView.setItems(item_list);
+    }
+
+    public void  addItemFunction(){
+        //Get serial number from user input and check if it is a duplicate value
+        //Get serial number from user input and check if it is a valid serial number
+        //Get the money value from user input and check if it is a valid money value
+        //Get the name value from user input and check if it is a valid name
 
         boolean duplicate = is_duplicate(serialTextField.getText().toUpperCase());
         boolean correct_serial = valid_serial(serialTextField.getText().toUpperCase());
         String money_value = format_money(valueTextField.getText());
         String name_value = valid_name(nameTextField.getText());
 
+        //If all values entered are valid create a new item with values
+        //Add new item to list
         if(money_value != null && !duplicate && correct_serial && name_value != null){
             Inventory_Item new_item = new Inventory_Item(money_value,serialTextField.getText().toUpperCase(), nameTextField.getText());
-            tableView.setItems(item_list);
-            tableView.getItems().add(new_item);
+            item_list.add(new_item);
         }
     }
 
     public boolean is_duplicate(String val){
+        //Loop for all items in the list
+        //Check if the serial number already exist
+        //If serial number exist, display error message
+        //Return true if it exist
+        //Return false if it does not already exist
+
         for (Inventory_Item inventory_item : item_list) {
             if (inventory_item.getSerial().equals(val)) {
                 ErrorMessages.displayDuplicateError();
@@ -118,25 +154,37 @@ public class Inventory_Controller implements Initializable  {
         return false;
     }
 
-
     boolean valid_serial(String serial_number) {
+        //Check if serial number is of correct length of 10
+        //Display error message if not
         if (serial_number == null || serial_number.length() != 10){
             ErrorMessages.displaySerialLengthError();
             return false;
         }
+
+        //Loop for length of serial number
+        //Check if each character is a number or letter
         for(int i = 0; i < serial_number.length(); i++) {
             if ((!Character.isLetterOrDigit(serial_number.charAt(i)))) {
                 ErrorMessages.displaySerialFormatError();
                 return false;
             }
         }
+
+        //Return true if both conditions are meant
         return true;
     }
     public String valid_name(String user_input){
+        //Checks if name is longer than 1 character
+        //Display Error if not
+
         if(user_input.length() < 2){
             ErrorMessages.displayNameError();
             return null;
         }
+
+        //Checks if name is not greater than 256 characters
+        //If not, name is cut off at 256 characters
         else if(user_input.length() > 256){
             ErrorMessages.displayNameWarning();
             return user_input.substring(0, 256);
@@ -146,6 +194,8 @@ public class Inventory_Controller implements Initializable  {
     }
 
     public String format_money(String money_value){
+        //Formats user input into USD money format
+        //Displays error if format if user input is incorrect
         try{
             NumberFormat fmt = NumberFormat.getCurrencyInstance();
             return fmt.format(Double.parseDouble(money_value));
@@ -156,7 +206,7 @@ public class Inventory_Controller implements Initializable  {
     }
 
     @FXML
-    public void RemoveItemButtonClicked(ActionEvent actionEvent) {
+    public void removeItemButtonClicked(ActionEvent actionEvent) {
         //Initialize observable list
         //Set tableView to all items list
         //Get all the items currently in list
@@ -170,11 +220,10 @@ public class Inventory_Controller implements Initializable  {
         selectedRows = tableView.getSelectionModel().getSelectedItems();
         if(selectedRows != null)
             allItems.removeAll(selectedRows);
-
     }
 
     @FXML
-    public void ClearAllButtonClicked(ActionEvent actionEvent) {
+    public void clearAllButtonClicked(ActionEvent actionEvent) {
         //Initialize observable list
         //Set tableView to all items list
         //Get all the items currently in list
@@ -188,18 +237,7 @@ public class Inventory_Controller implements Initializable  {
     }
 
     @FXML
-    public void SaveExcelButtonClicked(ActionEvent actionEvent) {
-        //Set the tableView to all items list
-        //Initialize new ExcelExporter
-        //Call exporter
-
-        tableView.setItems(item_list);
-        ExcelExport<Inventory_Item> exporter = new ExcelExport<>();
-        exporter.export(tableView);
-    }
-
-    @FXML
-    public void LoadTsvButtonClicked(ActionEvent actionEvent){
+    public void loadTsvButtonClicked(ActionEvent actionEvent){
         //Set the tableview to all items list
         //Call Json parser
         tableView.setItems(item_list);
@@ -209,13 +247,13 @@ public class Inventory_Controller implements Initializable  {
     @FXML
     public void LoadHtmlButtonClicked(ActionEvent actionEvent){
         //Set the tableview to all items list
-        //Call Json parser
+        //Call html parser
         tableView.setItems(item_list);
         ParseHtml parseHtml = new ParseHtml();
         parseHtml.import_html(tableView);
     }
     @FXML
-    public void LoadJsonButtonClicked(ActionEvent actionEvent){
+    public void loadJsonButtonClicked(ActionEvent actionEvent){
         //Set the tableview to all items list
         //Call Json parser
         tableView.setItems(item_list);
@@ -223,9 +261,10 @@ public class Inventory_Controller implements Initializable  {
     }
 
     @FXML
-    public void ChangeValueCell(TableColumn.CellEditEvent newCell) {
+    public void changeValueCell(TableColumn.CellEditEvent newCell) {
         //Get the selected cell
-        //Set the selected cell to user input
+        //Check if user input is valid
+        //If user input is valid set cell as user input
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String money_value = format_money(newCell.getNewValue().toString());
@@ -234,13 +273,10 @@ public class Inventory_Controller implements Initializable  {
     }
 
     @FXML
-    public void ChangeSerialNumberCell(TableColumn.CellEditEvent newCell) {
-        //Get the selected cell
-        //Get user input
-        //Check if user input is within 1-256 range.
-        //If user is above 256 character trim
-        //If user is under 1 do nothing
-        //If user is within range set selected cell to user input
+    public void changeSerialNumberCell(TableColumn.CellEditEvent newCell) {
+        //Get selected cell
+        //Check if serial number is not a duplicate and is valid
+        //If conditions are met set cell as user input
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String val = newCell.getNewValue().toString().toUpperCase();
@@ -249,38 +285,57 @@ public class Inventory_Controller implements Initializable  {
     }
 
     @FXML
-    public void ChangeNameCell(TableColumn.CellEditEvent newCell) {
+    public void changeNameCell(TableColumn.CellEditEvent newCell) {
         //Get the selected cell
-        //Check if selected cell is a valid date input
-        //If date is valid we set selected cell to user input
+        //Check if selected cell is a valid name
+        //If name is valid, set cell as user input
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String user_input = valid_name(newCell.getNewValue().toString());
         if(user_input != null){
             item_selected.setName(user_input);
         }
-
     }
 
     @FXML
-    public void SaveAsTsvButtonClicked(ActionEvent actionEvent){
+    public void saveAsTsvButtonClicked(ActionEvent actionEvent){
+        //Set tableview to item list
+        //Call tsv export
+
         tableView.setItems(item_list);
         TsvExport tsvExport = new TsvExport();
         tsvExport.export_tsv(item_list);
     }
 
     @FXML
-    public void SaveAsHtmlButtonClicked(ActionEvent actionEvent) {
+    public void saveAsHtmlButtonClicked(ActionEvent actionEvent) {
+        //Set tableview to item list
+        //Call html export
+
         tableView.setItems(item_list);
         HtmlExport htmlExport = new HtmlExport();
         htmlExport.export_html(item_list);
     }
 
     @FXML
-    public void SaveAsJsonButtonClicked(ActionEvent actionEvent) {
+    public void saveAsJsonButtonClicked(ActionEvent actionEvent) {
+
+        //Set tableview to item list
+        //Call json export
         tableView.setItems(item_list);
         JsonExport jsonExport = new JsonExport();
         jsonExport.export_json(item_list);
+    }
+
+    @FXML
+    public void saveExcelButtonClicked(ActionEvent actionEvent) {
+        //Set the tableView to all items list
+        //Initialize new ExcelExporter
+        //Call exporter
+
+        tableView.setItems(item_list);
+        ExcelExport<Inventory_Item> exporter = new ExcelExport<>();
+        exporter.export(tableView);
     }
 }
 
