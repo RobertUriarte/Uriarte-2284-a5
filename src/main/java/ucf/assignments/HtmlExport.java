@@ -36,11 +36,11 @@ public class HtmlExport extends Component {
                 sb.append("</title>\n");
                 sb.append("</head>\n");
                 sb.append("<body> <b>\n");
-                sb.append("Value Serial Number Name\n");
+                sb.append("Value&emsp;Serial &emsp; Number &emsp; Name\n");
                 for (Inventory_Item inventory_item : item_list) {
                     sb.append("<br>");
-                    sb.append(inventory_item.getValue()).append(" ");
-                    sb.append(inventory_item.getSerial()).append(" ");
+                    sb.append(inventory_item.getValue() + "&emsp;");
+                    sb.append(inventory_item.getSerial() + "&emsp;");
                     sb.append(inventory_item.getName()).append("\n");
                 }
                 sb.append("</b>");

@@ -27,8 +27,8 @@ public class ParseHtml {
             String line;
             while ((line = br.readLine()) != null) { //Read till end of file
                 if(line.contains("$")){ //Check once the first money value is reached
-                    String[] split = line.split(" ");
-                    String[] split2= split[0].split(">");
+                    String[] split = line.split("&emsp;");
+                    String[] split2 = split[0].split(">");
                     //Create item
                     Inventory_Item item = new Inventory_Item(split2[1],split[1],split[2]);
                     //Add item
