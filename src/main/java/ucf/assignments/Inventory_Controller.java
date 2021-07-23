@@ -112,30 +112,31 @@ public class Inventory_Controller implements Initializable  {
 
     @FXML
     public void addItemButtonClicked(ActionEvent actionEvent){
-        //Call add item function
-        //Set the tableview to our item list
-
-        addItemFunction();
-        tableView.setItems(item_list);
-    }
-
-    public void addItemFunction(){
         //Get serial number from user input and check if it is a duplicate value
         //Get serial number from user input and check if it is a valid serial number
         //Get the money value from user input and check if it is a valid money value
         //Get the name value from user input and check if it is a valid name
+        //If conditions are met Call add item function
+        //Set the tableview to our item list
 
         boolean duplicate = is_duplicate(serialTextField.getText().toUpperCase(),item_list);
         boolean correct_serial = valid_serial(serialTextField.getText().toUpperCase(),item_list);
         String money_value = format_money(valueTextField.getText(),item_list);
         String name_value = valid_name(nameTextField.getText(),item_list);
 
-        //If all values entered are valid create a new item with values
-        //Add new item to list
         if(money_value != null && !duplicate && correct_serial && name_value != null){
-            Inventory_Item new_item = new Inventory_Item(money_value,serialTextField.getText().toUpperCase(), nameTextField.getText());
-            item_list.add(new_item);
+            addItemFunction(money_value,serialTextField.getText().toUpperCase(),name_value,item_list);
+            tableView.setItems(item_list);
         }
+
+    }
+
+    public void addItemFunction(String money_value,String serialText,String name_value,ObservableList<Inventory_Item> item_list2){
+        //Create new item
+        //Add new item to list
+
+        Inventory_Item new_item = new Inventory_Item(money_value,serialText, name_value);
+        item_list2.add(new_item);
     }
 
     public boolean is_duplicate(String val, ObservableList<Inventory_Item> item_list2){

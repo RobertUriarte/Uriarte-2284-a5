@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +42,10 @@ class Inventory_ControllerTest {
 
     @Test
     void addItemButtonClickedTest() {
+        inventory_controller.addItemFunction("$50.00","EFGHIJKL10","Laptop",item_listTest);
+        Inventory_Item new_item = new Inventory_Item("$50.00","EFGHIJKL10","Laptop");
 
+        assertEquals(item_listTest.get(4).getName(),new_item.getName());
     }
 
     @Test
