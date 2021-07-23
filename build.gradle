@@ -22,13 +22,12 @@ dependencies {
     implementation 'com.fasterxml:aalto-xml:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.7'
 
-    testImplementation "org.testfx:testfx-core:4.0.16-alpha"
-
 }
 
 test {
     useJUnitPlatform()
 }
+
 
 javafx{
     version = "16"

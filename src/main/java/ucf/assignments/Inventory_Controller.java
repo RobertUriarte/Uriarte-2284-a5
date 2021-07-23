@@ -79,6 +79,7 @@ public class Inventory_Controller implements Initializable  {
         //Set filtered list predicate
         //Check if user_input is contained in our list
         //Return sorted list of filtered list
+
         filteredList.setPredicate(inventory_item -> {
             if(newValue == null || newValue.isEmpty()){
                 return true;
@@ -148,8 +149,10 @@ public class Inventory_Controller implements Initializable  {
 
         for (Inventory_Item inventory_item : item_list2) {
             if (inventory_item.getSerial().equals(val)) {
-                if(item_list2 == item_list)
-                    ErrorMessages.displayDuplicateError();
+                if(item_list2 == item_list) {
+                    ErrorMessages errorMessages = new ErrorMessages();
+                    errorMessages.displayDuplicateError();
+                }
                 return true;
             }
         }
@@ -160,8 +163,10 @@ public class Inventory_Controller implements Initializable  {
         //Check if serial number is of correct length of 10
         //Display error message if not
         if (serial_number == null || serial_number.length() != 10){
-            if(item_list2 == item_list)
-                ErrorMessages.displaySerialLengthError();
+            if(item_list2 == item_list){
+                ErrorMessages errorMessages = new ErrorMessages();
+                errorMessages.displaySerialLengthError();
+            }
             return false;
         }
 
@@ -169,8 +174,10 @@ public class Inventory_Controller implements Initializable  {
         //Check if each character is a number or letter
         for(int i = 0; i < serial_number.length(); i++) {
             if ((!Character.isLetterOrDigit(serial_number.charAt(i)))) {
-                if(item_list2 == item_list)
-                    ErrorMessages.displaySerialFormatError();
+                if(item_list2 == item_list){
+                    ErrorMessages errorMessages = new ErrorMessages();
+                    errorMessages.displaySerialFormatError();
+                }
                 return false;
             }
         }
@@ -183,16 +190,20 @@ public class Inventory_Controller implements Initializable  {
         //Display Error if not
 
         if(user_input.length() < 2){
-            if(item_list2 == item_list)
-                ErrorMessages.displayNameError();
+            if(item_list2 == item_list){
+                ErrorMessages errorMessages = new ErrorMessages();
+                errorMessages.displayNameError();
+            }
             return null;
         }
 
         //Checks if name is not greater than 256 characters
         //If not, name is cut off at 256 characters
         else if(user_input.length() > 256){
-            if(item_list2 == item_list)
-                ErrorMessages.displayNameWarning();
+            if(item_list2 == item_list){
+                ErrorMessages errorMessages = new ErrorMessages();
+                errorMessages.displayNameWarning();
+            }
             return user_input.substring(0, 256);
         }
         else
@@ -206,8 +217,11 @@ public class Inventory_Controller implements Initializable  {
             NumberFormat fmt = NumberFormat.getCurrencyInstance();
             return fmt.format(Double.parseDouble(money_value));
         } catch(NumberFormatException e) {
-            if(item_list2 == item_list)
-                ErrorMessages.displayMoneyError();
+            if(item_list2 == item_list){
+                ErrorMessages errorMessages = new ErrorMessages();
+                errorMessages.displayMoneyError();
+            }
+
         }
         return null;
     }
@@ -272,7 +286,8 @@ public class Inventory_Controller implements Initializable  {
         //Set the tableview to all items list
         //Call Json parser
         tableView.setItems(item_list);
-        ParseJson.parse(tableView);
+        ParseJson parseJson = new ParseJson();
+        parseJson.parse(tableView);
     }
 
     @FXML
@@ -283,6 +298,11 @@ public class Inventory_Controller implements Initializable  {
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String money_value = format_money(newCell.getNewValue().toString(),item_list);
+        changeValue(money_value,item_selected);
+        tableView.setItems(item_list);
+    }
+
+    public void changeValue(String money_value, Inventory_Item item_selected){
         if(money_value != null)
             item_selected.setValue(money_value);
     }
@@ -296,7 +316,12 @@ public class Inventory_Controller implements Initializable  {
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String val = newCell.getNewValue().toString().toUpperCase();
         if(!is_duplicate(val,item_list) && valid_serial(val,item_list))
-            item_selected.setSerial(newCell.getNewValue().toString().toUpperCase());
+            changeSerialNumber(item_selected,val);
+        tableView.setItems(item_list);
+    }
+
+    public void changeSerialNumber(Inventory_Item item_selected, String val){
+        item_selected.setSerial(val);
     }
 
     @FXML
@@ -308,8 +333,13 @@ public class Inventory_Controller implements Initializable  {
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String user_input = valid_name(newCell.getNewValue().toString(),item_list);
         if(user_input != null){
-            item_selected.setName(user_input);
+            changeName(user_input, item_selected);
         }
+        tableView.setItems(item_list);
+    }
+
+    public void changeName(String user_input, Inventory_Item item_selected){
+        item_selected.setName(user_input);
     }
 
     @FXML

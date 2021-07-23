@@ -65,7 +65,8 @@ public class HtmlExport extends Component {
             JOptionPane.showMessageDialog(null, "File Successfully Saved");
             writer.close();
         } catch (Exception e) {
-            ErrorMessages.displayFileError();
+            ErrorMessages errorMessages = new ErrorMessages();
+            errorMessages.displayFileError();
             JOptionPane.showMessageDialog(null, e);
         }
     }

@@ -37,7 +37,8 @@ public class ParseTsv {
                 item_list.add(item);
             }
         } catch (IOException e) {
-            ErrorMessages.displayFileNotFoundError();
+            ErrorMessages errorMessages = new ErrorMessages();
+            errorMessages.displayFileNotFoundError();
         }
     }
 }

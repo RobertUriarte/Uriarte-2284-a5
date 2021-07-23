@@ -1,5 +1,11 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Robert Uriarte
+ */
+
 package ucf.assignments;
 
+//Set up imports
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +16,13 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileSaveTest {
+    //Initialize list
     ObservableList<Inventory_Item> item_listTest = FXCollections.observableArrayList();
     ObservableList<Inventory_Item> item_listTest2 = FXCollections.observableArrayList();
 
-
     @BeforeEach
     public void SetUp(){
+        //Add items that are contained in sample item files
         item_listTest.add(new Inventory_Item("$50.00", "1234567890", "Tv"));
         item_listTest.add(new Inventory_Item("$20.00", "0123456789", "Car"));
         item_listTest.add(new Inventory_Item("$10.00", "0987654321", "Watch"));
@@ -23,6 +30,11 @@ public class FileSaveTest {
 
     @Test
     void saveTsvButtonClickedTest() {
+        //Initialize exporter
+        //Initialize file
+        //Parse newly saved file
+        //Assert if item values are correct
+
         TsvExport tsvExport = new TsvExport();
         File file = (new File("TsvTestFile.txt"));
 
@@ -37,7 +49,11 @@ public class FileSaveTest {
     }
 
     @Test
-    void saveHtmlButtonClickedTest() {
+    void saveHtmlButtonClickedTest() {//Initialize exporter
+        //Initialize file
+        //Parse newly saved file
+        //Assert if item values are correct
+
         HtmlExport htmlExport = new HtmlExport();
         File file = (new File("HtmlTestFile.html"));
 
@@ -53,6 +69,11 @@ public class FileSaveTest {
 
     @Test
     void saveJsonButtonClickedTest() {
+        //Initialize exporter
+        //Initialize file
+        //Parse newly saved file
+        //Assert if item values are correct
+
         JsonExport jsonExport = new JsonExport();
         File file = (new File("JsonTestFile.json"));
 

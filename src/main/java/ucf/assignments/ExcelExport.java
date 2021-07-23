@@ -57,7 +57,7 @@ public class ExcelExport<Inventory_Item> {
         //Set up try catch
         try {
             File file = new File("Inventory.xls");
-            file.createNewFile(); // if file already exists will do nothing
+            file.createNewFile();
             hssfWorkbook.write(new FileOutputStream(file, false));
             hssfWorkbook.close();
         } catch (IOException e) {

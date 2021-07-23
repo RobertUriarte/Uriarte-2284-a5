@@ -10,7 +10,7 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 public class ErrorMessages {
-    public static void displayDuplicateError(){
+    public void displayDuplicateError(){
         //Create alert
         //Set alert title
         //Set text
@@ -22,7 +22,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displaySerialFormatError(){
+    public void displaySerialFormatError(){
         //Create alert
         //Set alert title
         //Set text
@@ -35,7 +35,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displaySerialLengthError(){
+    public void displaySerialLengthError(){
         //Create alert
         //Set alert title
         //Set text
@@ -48,7 +48,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displayMoneyError(){
+    public void displayMoneyError(){
         //Create alert
         //Set alert title
         //Set text
@@ -61,7 +61,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displayNameError(){
+    public void displayNameError(){
         //Create alert
         //Set alert title
         //Set text
@@ -73,7 +73,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displayNameWarning(){
+    public void displayNameWarning(){
         //Create alert
         //Set alert title
         //Set text
@@ -86,7 +86,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displayFileError(){
+    public void displayFileError(){
         //Create alert
         //Set alert title
         //Set text
@@ -98,7 +98,7 @@ public class ErrorMessages {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public static void displayFileNotFoundError(){
+    public void displayFileNotFoundError(){
         //Create alert
         //Set alert title
         //Set text

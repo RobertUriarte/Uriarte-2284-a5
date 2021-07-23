@@ -44,7 +44,8 @@ public class TsvExport extends Component {
             writer.close();
         }
         catch(Exception e){
-            ErrorMessages.displayFileError();
+            ErrorMessages errorMessages = new ErrorMessages();
+            errorMessages.displayFileError();
             JOptionPane.showMessageDialog(null, e);
         }
     }

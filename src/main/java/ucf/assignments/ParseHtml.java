@@ -41,7 +41,8 @@ public class ParseHtml {
                 }
             }
         } catch (IOException e) {
-            ErrorMessages.displayFileNotFoundError();
+            ErrorMessages errorMessages = new ErrorMessages();
+            errorMessages.displayFileNotFoundError();
         }
     }
 }
