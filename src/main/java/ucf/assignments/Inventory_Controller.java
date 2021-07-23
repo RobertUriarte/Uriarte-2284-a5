@@ -126,9 +126,9 @@ public class Inventory_Controller implements Initializable  {
         //Get the name value from user input and check if it is a valid name
 
         boolean duplicate = is_duplicate(serialTextField.getText().toUpperCase(),item_list);
-        boolean correct_serial = valid_serial(serialTextField.getText().toUpperCase());
-        String money_value = format_money(valueTextField.getText());
-        String name_value = valid_name(nameTextField.getText());
+        boolean correct_serial = valid_serial(serialTextField.getText().toUpperCase(),item_list);
+        String money_value = format_money(valueTextField.getText(),item_list);
+        String name_value = valid_name(nameTextField.getText(),item_list);
 
         //If all values entered are valid create a new item with values
         //Add new item to list
@@ -155,11 +155,12 @@ public class Inventory_Controller implements Initializable  {
         return false;
     }
 
-    boolean valid_serial(String serial_number) {
+    boolean valid_serial(String serial_number,ObservableList<Inventory_Item> item_list2) {
         //Check if serial number is of correct length of 10
         //Display error message if not
         if (serial_number == null || serial_number.length() != 10){
-            ErrorMessages.displaySerialLengthError();
+            if(item_list2 == item_list)
+                ErrorMessages.displaySerialLengthError();
             return false;
         }
 
@@ -167,7 +168,8 @@ public class Inventory_Controller implements Initializable  {
         //Check if each character is a number or letter
         for(int i = 0; i < serial_number.length(); i++) {
             if ((!Character.isLetterOrDigit(serial_number.charAt(i)))) {
-                ErrorMessages.displaySerialFormatError();
+                if(item_list2 == item_list)
+                    ErrorMessages.displaySerialFormatError();
                 return false;
             }
         }
@@ -175,33 +177,36 @@ public class Inventory_Controller implements Initializable  {
         //Return true if both conditions are meant
         return true;
     }
-    public String valid_name(String user_input){
+    public String valid_name(String user_input,ObservableList<Inventory_Item> item_list2){
         //Checks if name is longer than 1 character
         //Display Error if not
 
         if(user_input.length() < 2){
-            ErrorMessages.displayNameError();
+            if(item_list2 == item_list)
+                ErrorMessages.displayNameError();
             return null;
         }
 
         //Checks if name is not greater than 256 characters
         //If not, name is cut off at 256 characters
         else if(user_input.length() > 256){
-            ErrorMessages.displayNameWarning();
+            if(item_list2 == item_list)
+                ErrorMessages.displayNameWarning();
             return user_input.substring(0, 256);
         }
         else
             return user_input;
     }
 
-    public String format_money(String money_value){
+    public String format_money(String money_value,ObservableList<Inventory_Item> item_list2){
         //Formats user input into USD money format
         //Displays error if format if user input is incorrect
         try{
             NumberFormat fmt = NumberFormat.getCurrencyInstance();
             return fmt.format(Double.parseDouble(money_value));
         } catch(NumberFormatException e) {
-            ErrorMessages.displayMoneyError();
+            if(item_list2 == item_list)
+                ErrorMessages.displayMoneyError();
         }
         return null;
     }
@@ -268,7 +273,7 @@ public class Inventory_Controller implements Initializable  {
         //If user input is valid set cell as user input
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
-        String money_value = format_money(newCell.getNewValue().toString());
+        String money_value = format_money(newCell.getNewValue().toString(),item_list);
         if(money_value != null)
             item_selected.setValue(money_value);
     }
@@ -281,7 +286,7 @@ public class Inventory_Controller implements Initializable  {
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
         String val = newCell.getNewValue().toString().toUpperCase();
-        if(!is_duplicate(val,item_list) && valid_serial(val))
+        if(!is_duplicate(val,item_list) && valid_serial(val,item_list))
             item_selected.setSerial(newCell.getNewValue().toString().toUpperCase());
     }
 
@@ -292,7 +297,7 @@ public class Inventory_Controller implements Initializable  {
         //If name is valid, set cell as user input
 
         Inventory_Item item_selected = tableView.getSelectionModel().getSelectedItem();
-        String user_input = valid_name(newCell.getNewValue().toString());
+        String user_input = valid_name(newCell.getNewValue().toString(),item_list);
         if(user_input != null){
             item_selected.setName(user_input);
         }

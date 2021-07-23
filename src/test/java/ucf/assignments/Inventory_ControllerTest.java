@@ -58,14 +58,44 @@ class Inventory_ControllerTest {
 
     @Test
     void valid_serialTest() {
+        boolean actual = inventory_controller.valid_serial("1234567890",item_listTest);
+        assertTrue(actual);
+
+        boolean actual2 = inventory_controller.valid_serial("21241",item_listTest);
+        assertFalse(actual2);
+
+        boolean actual3 = inventory_controller.valid_serial("ABCDE1234*",item_listTest);
+        assertFalse(actual3);
     }
 
     @Test
     void valid_nameTest() {
+        String actual = inventory_controller.valid_name("Watch",item_listTest);
+        assertEquals("Watch",actual);
+
+        String actual2 = inventory_controller.valid_name("W",item_listTest);
+        assertNull(actual2);
+
+        String actual3 = inventory_controller.valid_name("THIS STRING IS 256 CHARACTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx123xxx",item_listTest);
+        assertEquals("THIS STRING IS 256 CHARACTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx123",actual3);
     }
 
     @Test
     void format_moneyTest() {
+        String actual = inventory_controller.format_money("50",item_listTest);
+        assertEquals("$50.00",actual);
+
+        String actual2 = inventory_controller.format_money("125.59",item_listTest);
+        assertEquals("$125.59",actual2);
+
+        String actual3 = inventory_controller.format_money("56.89999999",item_listTest);
+        assertEquals("$56.90",actual3);
+
+        String actual4 = inventory_controller.format_money("Hello",item_listTest);
+        assertNull(actual4);
+
+        String actual5 = inventory_controller.format_money("50.50.50",item_listTest);
+        assertNull(actual5);
     }
 
     @Test
