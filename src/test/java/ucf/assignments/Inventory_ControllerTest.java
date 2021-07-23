@@ -101,6 +101,17 @@ class Inventory_ControllerTest {
 
     @Test
     void removeItemButtonClickedTest() {
+        ObservableList<Inventory_Item> selectedRows = FXCollections.observableArrayList();
+        selectedRows.add(item_listTest.get(3));
+        inventory_controller.remove_items(item_listTest,selectedRows);
+
+        assertEquals(3, item_listTest.size());
+
+        selectedRows.remove(0);
+        selectedRows.add(item_listTest.get(0));
+        inventory_controller.remove_items(item_listTest,selectedRows);
+
+        assertNotEquals("Tv",item_listTest.get(0).getName());
     }
 
     @Test

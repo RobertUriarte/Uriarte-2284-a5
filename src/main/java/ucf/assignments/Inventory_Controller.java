@@ -214,17 +214,21 @@ public class Inventory_Controller implements Initializable  {
 
     @FXML
     public void removeItemButtonClicked(ActionEvent actionEvent) {
-        //Initialize observable list
         //Set tableView to all items list
+        //Initialize observable list
         //Get all the items currently in list
         //Get selected rows
         //Check if there are any selected rows
         //If there are selected rows, remove them
 
-        ObservableList<Inventory_Item> selectedRows, allItems;
         tableView.setItems(item_list);
+        ObservableList<Inventory_Item> selectedRows, allItems;
         allItems = tableView.getItems();
         selectedRows = tableView.getSelectionModel().getSelectedItems();
+        remove_items(allItems,selectedRows);
+    }
+
+    public void remove_items(ObservableList<Inventory_Item> allItems, ObservableList<Inventory_Item> selectedRows){
         if(selectedRows != null)
             allItems.removeAll(selectedRows);
     }
