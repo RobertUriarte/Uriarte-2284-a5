@@ -12,7 +12,7 @@ How To:
  	Remove Items - To remove items simply click on any item and click remove. To remove multiple items at once hold CTRL and click the items you wish to delete, then click
  		       remove. To remove all the items, you click clear all. 
   
- 	Search for items - To search for an item, double click the search bar, then type in any value,serial number, or name and the list will be filtered based on the search bar.
+ 	Search for items - To search for an item, click the search bar then press enter on keyboard, then type in any value,serial number, or name and the list will be filtered based on the search bar.
 
 	Sort Items - to sort the items by value, serial number, or name, click the table collumns labeled "Value", "Serial Number", and "Name". The program will then sort the list from
 		     first to last in alphabetical order in the desired column selected. If the table column is selected again it will sort from last to first in alphabetical order.
