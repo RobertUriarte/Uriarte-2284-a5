@@ -1,0 +1,184 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class InventoryApplication{
+    - main(args)
+    - start(Stage)
+}
+
+class Inventory_Controller{
+    + item_list: ObservableList<Inventory_Item>
+    + location: URL
+    + recourses: ResourceBundle
+    + file: File
+    + operator: String
+    + tableView: TableView
+    + value: TableColumn
+    + serial: TableColumn
+    + name: TableColumn
+    + actionEvent: ActionEvent
+    + valueTextField TextField
+    + serialTextField TextField
+    + nameTextField TextField
+    + searchTextField TextField
+    + selected_item: Inventory_Item
+    + sortedList: SortedList<Inventory_Item>
+    + filteredList: FilteredList<Inventory_Item>
+    + newValue: String
+    + duplicate: boolean
+    + correct_serial: boolean
+    + money_value: String
+    + name_value: String
+    + allItem: ObservableList<Inventory_Item> 
+    + all: ObservableList<Inventory_Item> 
+
+    - Initialize(location,recourses)
+    - SearchButtonClicked(ActionEvent)
+    - filterData(filteredList,newValue)
+    - filterList(item_list,searchTextField)
+    - addItemFunction(money_value,serialText,name_value,item_list)
+    - AddItemButtonClicked(ActionEvent)
+    - RemoveItemButtonClicked(ActionEvent)
+    - remove_items(allItems,selectedRows)
+    - remove_all_items(allItems,all)
+    - is_duplicate(val, item_list)
+    - valid_serial(serial_number,item_list)
+    - valid_name(user_input,item_list)
+    - ClearAllButtonClicked((ActionEvent)
+    - format_money(money_value,item_list)
+    - loadTsvButtonClicked(ActionEvent)
+    - loadHtmlButtonClicked(ActionEvent)
+    - loadJsonButtonClicked(ActionEvent)
+    - saveTsvButtonClicked(ActionEvent)
+    - saveHtmlButtonClicked(ActionEvent)
+    - saveJsonButtonClicked(ActionEvent)
+    - ChangeTitleCell(TableColumn.CellEditEvent )
+    - ChangeDescriptionCell(TableColumn.CellEditEvent )
+    - ChangeDateCell(TableColumn.CellEditEvent )
+    - ChangeStatusCell(TableColumn.CellEditEvent )
+}
+
+class Inventory_Item{
+    + value: String
+    + serial: String
+    + name: String
+
+    - Inventory_Item(value,serial,name)
+    - getValue()
+    - getSerial()
+    - getName()
+    - setValue(name)
+    - setSerial(description)
+    - setName(due_date)
+}
+
+class ParseTsv{
+    + tableView: TableView
+    + fileChooser: JFileChooser
+    + fileToSave: File
+    + br: BuffReader
+    + line: String
+    + split: String[]
+
+    - import_tsv(tableView))
+    - read_tsv_file(item_list,fileToSave)
+}
+
+class TsvExport{
+    + item_list: ObservableList<Inventory_Item>
+    + fileChooser: JFileChooser
+    + fileToSave: File
+    + sb: StringBuilder
+    + write: FileWriter
+
+    - export_tsv(item_list)
+    - write_tsv(item_list,fileToSave)
+}
+
+class ParseHtml{
+    + tableView: TableView
+    + fileChooser: JFileChooser
+    + fileToSave: File
+    + br: BuffReader
+    + line: String
+
+    - import_html(tableView))
+    - read_html(item_list,fileToSave)
+}
+
+class HtmlExport{
+    + item_list: ObservableList<Inventory_Item>
+    + fileChooser: JFileChooser
+    + fileToSave: File
+    + sb: StringBuilder
+    + write: FileWriter
+    + out: BuffWriter
+
+    - export_html(item_list)
+    - write_html(item_list,fileToSave)
+}
+
+class ParseJson{
+    + items: ObservableList<Inventory_Item>
+    + fileElement: JsonElement
+    + fileObject: JsonObject
+    + fileChooser: FileChooser
+    + jsonArrayofProducts: JsonArray
+    + title: String
+    + description: String
+    + date: String
+    + status: String
+    + item: Inventory_Item
+    + json: File
+    + tableView: TableView<Inventory_Item>
+
+    - parse(json file)
+    - read_json(file,item_list)
+}
+
+class JsonExport{
+    + item_list: ObservableList<Inventory_Item>
+    + fileChooser: JFileChooser
+    + fileToSave: File
+    + writer: FileWriter
+
+    - export_json(item_list)
+    - write_json(item_list,fileToSave)
+}
+
+class ExcelExport{
+    + tableView: TableView<Inventory_Item>
+    + hssfWorkbook: HSSFWorkbook
+    + hssfSheet: HSSFSheet
+    + HSSFRow: firstRow
+    + hssfRow: HSSFRow
+    + celValue: Object
+    + file: File
+
+    - export(TableView)
+}
+
+java.fx <|-- InventoryApplication
+
+Inventory_Controller o--> Inventory_Item
+Inventory_Controller o--> ParseJson
+Inventory_Controller o--> ParseHtml
+Inventory_Controller o--> ParseTsv
+Inventory_Controller o--> TsvExport
+Inventory_Controller o--> HtmlExport
+Inventory_Controller o--> JsonExport
+Inventory_Controller o--> ExcelExport
+
+ParseJson o--> Inventory_Item
+ParseHtml o--> Inventory_Item
+ParseTsv o--> Inventory_Item
+TsvExport o--> Inventory_Item
+HtmlExport o--> Inventory_Item
+JsonExport o--> Inventory_Item
+ExcelExport o--> Inventory_Item
+
+
+
+
+InventoryApplication - Inventory_Controller
+@endUML
